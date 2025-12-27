@@ -1,0 +1,15 @@
+{
+  "manches": [
+    {
+      "id": 4,
+      "title": "BLIND TEST",
+      "points": 2,
+      "type": "blindtest",
+      "question": "🎵 Écoutez l'extrait et trouvez le titre !",
+      "answer": "Shake It Off",
+      "youtubeId": "nfWlot6h_JM",
+      "startTime": 30,
+      "note": "Première à buzzer gagne ! (Testez d'abord avec cette vidéo, si ça marche c'est que votre code est OK)"
+    }
+  ]
+}

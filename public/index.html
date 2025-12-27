@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Interface Interactive</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER AVEC SCORES -->
+        <div class="header">
+            <div class="title" id="quizTitle">🎤 QUIZ 🎤</div>
+            <div class="scoreboard">
+                <div class="player" id="player1">
+                    <div class="player-name" id="player1Name">Joueur 1</div>
+                    <div class="player-score" id="score1">0</div>
+                    <div class="player-joker" id="joker1">⭐ JOKER DISPONIBLE</div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="player" id="player2">
+                    <div class="player-name" id="player2Name">Joueur 2</div>
+                    <div class="player-score" id="score2">0</div>
+                    <div class="player-joker" id="joker2">⭐ JOKER DISPONIBLE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRESSION -->
+        <div class="progression">
+            <div class="progression-title">PROGRESSION DU QUIZ</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;" data-text="Prêt à démarrer"></div>
+            </div>
+        </div>
+
+        <!-- JOKER OVERLAY -->
+        <div class="joker-overlay" id="jokerOverlay"></div>
+
+        <!-- JOKER PANEL -->
+        <div class="joker-panel" id="jokerPanel">
+            <div class="joker-text">⚠️ Un joueur souhaite-t-il utiliser son JOKER pour doubler les points de cette manche ?</div>
+            <div class="joker-buttons">
+                <!-- Les boutons seront générés dynamiquement -->
+            </div>
+        </div>
+
+        <!-- LISTE DES MANCHES -->
+        <div class="manches-list" id="manchesList">
+            <div class="manches-title">📋 DÉROULEMENT DU QUIZ</div>
+            <div class="manches-grid" id="manchesGrid">
+                <!-- Les manches seront ajoutées dynamiquement ici -->
+            </div>
+        </div>
+
+        <!-- QUESTION CONTAINER - Les manches gèrent leur propre UI ici -->
+        <div class="question-container" id="questionContainer">
+            <div class="manche-info">
+                <div class="manche-title" id="mancheTitle">Prêtes à commencer ?</div>
+                <div class="manche-points" id="manchePoints"></div>
+            </div>
+
+            <div class="question-text" id="questionText">
+                Cliquez sur "Démarrer le Quiz" pour commencer !
+            </div>
+
+            <!-- CONTROLS - Boutons générés dynamiquement par les manches -->
+            <div class="controls" id="controls">
+                <button class="btn btn-primary" onclick="window.quizController.startQuiz()">🚀 Démarrer le Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WINNER MODAL -->
+    <div class="winner-modal" id="winnerModal">
+        <div class="winner-content">
+            <div class="winner-title">🏆 VICTOIRE ! 🏆</div>
+            <div class="winner-name" id="winnerName"></div>
+            <p style="font-size: 1.3em; color: #666; margin-bottom: 30px;">a gagné le quiz !</p>
+            <button class="btn btn-primary" onclick="location.reload()">🔄 Recommencer</button>
+        </div>
+    </div>
+
+    <script type="module" src="../src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/**
+ * Styles pour MancheListe
+ * Saisie de liste chronométrée
+ */
+
+/* .manche-base maintenant dans styles.css */
+
+/* Composant ListeInput */
+.liste-input {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    border-radius: 15px;
+}
+
+.liste-header {
+    text-align: center;
+    color: #2d3748;
+}
+
+.liste-player-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    color: #2c5282;
+}
+
+.liste-instructions {
+    margin: 0;
+    color: #4a5568;
+    font-size: 1.1em;
+}
+
+/* Timer - maintenant dans styles.css */
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Textarea */
+.liste-textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    resize: vertical;
+    min-height: 250px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.liste-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.liste-textarea.warning {
+    border-color: #ed8936;
+    animation: shake 0.5s;
+}
+
+.liste-textarea.disabled {
+    background: #edf2f7;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.liste-count {
+    text-align: right;
+    font-weight: bold;
+    color: #2c5282;
+    font-size: 1.1em;
+}
+
+/* Résultats - utilise .result-card de styles.css */
+.liste-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.liste-answers {
+    margin-top: 20px;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.liste-answer-item {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.95em;
+}
+
+.liste-answer-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .liste-input {
+        padding: 20px;
+    }
+
+    .liste-player-name {
+        font-size: 1.4em;
+    }
+
+    .liste-textarea {
+        min-height: 200px;
+        font-size: 1em;
+    }
+}

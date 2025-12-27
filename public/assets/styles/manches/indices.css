@@ -1,0 +1,111 @@
+/**
+ * Styles pour MancheIndices
+ * Affichage progressif d'indices avec points dégressifs
+ */
+
+/* .manche-base est maintenant dans styles.css - supprimé la duplication */
+
+/* Container des indices */
+.indices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+/* Styles pour chaque indice */
+.indice {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 10px;
+    padding: 0;
+    border-left: 4px solid #667eea;
+}
+
+.indice.visible {
+    opacity: 1;
+    max-height: 200px;
+    transform: translateY(0);
+    padding: 15px 20px;
+}
+
+/* Label de l'indice avec points */
+.indice-label {
+    display: block;
+    font-weight: bold;
+    color: #667eea;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Texte de l'indice */
+.indice-text {
+    display: block;
+    color: #2d3748;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+/* Animation de révélation progressive */
+.indice.visible:nth-child(1) {
+    animation: slideIn 0.4s ease forwards;
+}
+
+.indice.visible:nth-child(2) {
+    animation: slideIn 0.4s ease 0.1s forwards;
+}
+
+.indice.visible:nth-child(3) {
+    animation: slideIn 0.4s ease 0.2s forwards;
+}
+
+.indice.visible:nth-child(4) {
+    animation: slideIn 0.4s ease 0.3s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dégradé de couleurs selon la valeur des points */
+.indice:nth-child(1) {
+    border-left-color: #48bb78; /* Vert - 4 points */
+}
+
+.indice:nth-child(2) {
+    border-left-color: #4299e1; /* Bleu - 3 points */
+}
+
+.indice:nth-child(3) {
+    border-left-color: #ed8936; /* Orange - 2 points */
+}
+
+.indice:nth-child(4) {
+    border-left-color: #f56565; /* Rouge - 1 point */
+}
+
+/* Bouton désactivé - supprimé car déjà défini dans styles.css */
+
+/* Responsive */
+@media (max-width: 768px) {
+    .indice {
+        padding: 10px 15px;
+    }
+
+    .indice-text {
+        font-size: 1em;
+    }
+}
