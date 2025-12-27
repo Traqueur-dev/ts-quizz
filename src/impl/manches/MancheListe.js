@@ -25,7 +25,8 @@ export default class MancheListe extends Manche {
             listeAnswers: { player1: '', player2: '' },
             listeScores: { player1: 0, player2: 0 },
             phase: 'input', // 'input' | 'results'
-            answerRevealed: false
+            answerRevealed: false,
+            questionRevealed: { player1: false, player2: false }
         };
     }
 
@@ -47,6 +48,25 @@ export default class MancheListe extends Manche {
         const playerKey = this.metadata.currentPlayer;
         const playerName = this.config.players[playerKey].name;
         const timerDuration = this.config.game.listeTimerDuration;
+
+        // Si la question n'est pas encore révélée pour ce joueur
+        if (!this.metadata.questionRevealed[playerKey]) {
+            this.container.innerHTML = `
+                <div class="liste-manche">
+                    <div class="question-reveal-container">
+                        <p class="question-info">🎯 Question pour <strong>${this.escapeHtml(playerName)}</strong></p>
+                        <button class="btn btn-primary btn-lg" id="revealQuestionBtn">
+                            📖 Révéler la question
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('revealQuestionBtn').addEventListener('click', () => {
+                this.revealQuestion();
+            });
+            return;
+        }
 
         this.container.innerHTML = `
             <div class="liste-manche">
@@ -92,6 +112,15 @@ export default class MancheListe extends Manche {
             this.container.querySelector('#controls'),
             buttonsConfig
         );
+    }
+
+    /**
+     * Révèle la question pour le joueur actuel
+     */
+    revealQuestion() {
+        const playerKey = this.metadata.currentPlayer;
+        this.metadata.questionRevealed[playerKey] = true;
+        this.render();
     }
 
     /**

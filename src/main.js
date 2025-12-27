@@ -13,6 +13,7 @@ MancheFactory.register('blindtest', Manches.MancheBlindTest);
 MancheFactory.register('liste', Manches.MancheListe);
 MancheFactory.register('vraifaux', Manches.MancheVraiFaux);
 MancheFactory.register('themes', Manches.MancheThemes);
+MancheFactory.register('qcm', Manches.MancheQCM);
 
 // Variables globales
 let CONFIG = null;

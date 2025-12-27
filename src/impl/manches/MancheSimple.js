@@ -25,6 +25,7 @@ export default class MancheSimple extends Manche {
      */
     loadMetadata() {
         this.metadata = {
+            questionRevealed: false,
             answerRevealed: false
         };
     }
@@ -36,7 +37,26 @@ export default class MancheSimple extends Manche {
         const player1Name = this.getPlayerName('player1');
         const player2Name = this.getPlayerName('player2');
 
-        // Créer la structure HTML
+        // Si la question n'est pas encore révélée, afficher le bouton de révélation
+        if (!this.metadata.questionRevealed) {
+            this.container.innerHTML = `
+                <div class="simple-manche">
+                    <div class="question-reveal-container">
+                        <p class="question-info">🎯 Question prête à être révélée</p>
+                        <button class="btn btn-primary btn-lg" id="revealQuestionBtn">
+                            📖 Révéler la question
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('revealQuestionBtn').addEventListener('click', () => {
+                this.revealQuestion();
+            });
+            return;
+        }
+
+        // Créer la structure HTML avec la question révélée
         this.container.innerHTML = `
             <div class="simple-manche">
                 <div class="question-display">
@@ -80,6 +100,14 @@ export default class MancheSimple extends Manche {
                 onClick: () => this.skip()
             }
         ]);
+    }
+
+    /**
+     * Révèle la question et réaffiche l'UI
+     */
+    revealQuestion() {
+        this.metadata.questionRevealed = true;
+        this.render();
     }
 
     /**

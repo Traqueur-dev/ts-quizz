@@ -1,15 +1,444 @@
 {
   "manches": [
     {
-      "id": 4,
-      "title": "BLIND TEST",
+      "id": 1,
+      "title": "RAPIDITÉ",
+      "points": 1,
+      "type": "simple",
+      "question": "Quel est le prénom du frère de Taylor Swift ?",
+      "answer": "Austin",
+      "note": "🎯 La gagnante choisit le thème adverse pour les 4 thèmes !"
+    },
+    {
+      "id": 2,
+      "title": "LES 4 THÈMES",
+      "points": 2,
+      "type": "themes",
+      "themes": {
+        "A": {
+          "title": "🎵 DISCOGRAPHIE",
+          "description": "Albums, tracklists, collaborations",
+          "questions": [
+            {
+              "question": "Quel album Taylor's Version contient la chanson 'All Too Well (10 Minute Version)' ?",
+              "answer": "Red (Taylor's Version)"
+            },
+            {
+              "question": "Sur quel album trouve-t-on la chanson 'Karma' ?",
+              "answer": "Midnights"
+            }
+          ]
+        },
+        "B": {
+          "title": "✍️ PAROLES & CHANSONS",
+          "description": "Paroles iconiques et hits",
+          "questions": [
+            {
+              "question": "Complétez : 'It's me, hi, I'm the problem, it's me. At teatime, everybody agrees...' ?",
+              "answer": "I'll stare directly at the sun but never in the mirror"
+            },
+            {
+              "question": "Dans 'Shake It Off', que dit Taylor aux haters ?",
+              "answer": "Shake it off / Les haters gonna hate"
+            }
+          ]
+        },
+        "C": {
+          "title": "👤 POP CULTURE",
+          "description": "Moments iconiques, actualités",
+          "questions": [
+            {
+              "question": "Quel joueur de football américain Taylor Swift fréquente-t-elle depuis 2023 ?",
+              "answer": "Travis Kelce"
+            },
+            {
+              "question": "Combien de chats Taylor Swift a-t-elle ?",
+              "answer": "3 chats (Meredith Grey, Olivia Benson, Benjamin Button)"
+            }
+          ]
+        },
+        "D": {
+          "title": "🎭 ERAS TOUR",
+          "description": "La tournée la plus iconique",
+          "questions": [
+            {
+              "question": "Quelle tradition les fans font-ils pendant l'Eras Tour avec des bracelets ?",
+              "answer": "Échanger des bracelets de l'amitié"
+            },
+            {
+              "question": "À la fin de quelle era Taylor change-t-elle de tenue pour jouer les chansons surprises ?",
+              "answer": "Après l'era Midnights (ou pendant le segment acoustique)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "BLIND TEST #1",
       "points": 2,
       "type": "blindtest",
       "question": "🎵 Écoutez l'extrait et trouvez le titre !",
       "answer": "Shake It Off",
       "youtubeId": "nfWlot6h_JM",
       "startTime": 30,
-      "note": "Première à buzzer gagne ! (Testez d'abord avec cette vidéo, si ça marche c'est que votre code est OK)"
+      "note": "Première à buzzer gagne !"
+    },
+    {
+      "id": 4,
+      "title": "LA LISTE #1",
+      "points": 3,
+      "type": "liste",
+      "question": "Citez le maximum de chansons de l'album 'Midnights' - version standard uniquement (30 secondes)",
+      "answer": "Lavender Haze, Maroon, Anti-Hero, Snow On The Beach, You're On Your Own Kid, Midnight Rain, Question...?, Vigilante Shit, Bejeweled, Labyrinth, Karma, Sweet Nothing, Mastermind",
+      "note": "Celle qui en a le plus gagne 3 points !"
+    },
+    {
+      "id": 5,
+      "title": "LE CARRÉ D'AS #1",
+      "points": 3,
+      "type": "indices",
+      "question": "Devinez la chanson avec les indices progressifs",
+      "indices": [
+        "Cette chanson fait partie de l'album 'folklore'",
+        "Elle raconte l'histoire d'un triangle amoureux",
+        "Le titre est un prénom féminin de 5 lettres",
+        "Dans le clip, Taylor porte un cardigan"
+      ],
+      "answer": "betty",
+      "pointsProgression": [4, 3, 2, 1]
+    },
+    {
+      "id": 6,
+      "title": "QCM #1",
+      "points": 2,
+      "type": "qcm",
+      "questions": [
+        {
+          "question": "Dans quel film Taylor Swift a-t-elle joué en 2019 aux côtés de stars comme Idris Elba et Judi Dench ?",
+          "choices": {
+            "A": "Les Misérables",
+            "B": "Cats",
+            "C": "The Greatest Showman",
+            "D": "A Star Is Born"
+          },
+          "answer": "B"
+        },
+        {
+          "question": "Quel(s) Grammy(s) pour 'Album de l'année' Taylor a-t-elle remporté(s) ? (Plusieurs réponses possibles)",
+          "choices": {
+            "A": "Fearless",
+            "B": "Red",
+            "C": "1989",
+            "D": "folklore"
+          },
+          "answer": ["A", "C", "D"]
+        },
+        {
+          "question": "Quelle couleur est principalement associée à l'album 'reputation' ?",
+          "choices": {
+            "A": "Rose pastel",
+            "B": "Noir",
+            "C": "Doré",
+            "D": "Violet"
+          },
+          "answer": "B"
+        },
+        {
+          "question": "Combien de fois Taylor Swift a-t-elle remporté le Grammy pour 'Album de l'année' ?",
+          "choices": {
+            "A": "2 fois",
+            "B": "3 fois",
+            "C": "4 fois",
+            "D": "5 fois"
+          },
+          "answer": "C"
+        }
+      ],
+      "note": "Les joueuses répondent à tour de rôle. La bonne réponse est révélée après chaque question."
+    },
+    {
+      "id": 7,
+      "title": "VRAI OU FAUX #1",
+      "points": 3,
+      "type": "vraifaux",
+      "questions": [
+        {
+          "question": "Taylor Swift a 3 chats nommés d'après des personnages de séries/films",
+          "answer": true,
+          "explanation": "Meredith Grey, Olivia Benson et Benjamin Button"
+        },
+        {
+          "question": "Taylor Swift écrit le numéro 13 sur sa main avant chaque concert",
+          "answer": true,
+          "explanation": "C'est une de ses traditions porte-bonheur"
+        },
+        {
+          "question": "L'album 'Lover' est sorti en 2018",
+          "answer": false,
+          "explanation": "Lover est sorti en 2019"
+        }
+      ],
+      "note": "Tout juste = 3 points, sinon 0 !"
+    },
+    {
+      "id": 8,
+      "title": "BLIND TEST #2",
+      "points": 2,
+      "type": "blindtest",
+      "question": "🎵 Écoutez l'extrait et trouvez le titre !",
+      "answer": "Blank Space",
+      "youtubeId": "e-ORhEE9VVg",
+      "startTime": 45,
+      "note": "Première à buzzer gagne !"
+    },
+    {
+      "id": 9,
+      "title": "QCM #2",
+      "points": 2,
+      "type": "qcm",
+      "questions": [
+        {
+          "question": "Quelle chanson de Taylor a été utilisée comme générique de la série 'Grey's Anatomy' ?",
+          "choices": {
+            "A": "White Horse",
+            "B": "Breathe",
+            "C": "The Story of Us",
+            "D": "Safe & Sound"
+          },
+          "answer": "A"
+        },
+        {
+          "question": "Quel(s) album(s) ont été enregistré(s) pendant la pandémie de COVID-19 ? (Plusieurs réponses)",
+          "choices": {
+            "A": "Lover",
+            "B": "folklore",
+            "C": "evermore",
+            "D": "Midnights"
+          },
+          "answer": ["B", "C"]
+        },
+        {
+          "question": "Combien de versions de 'All Too Well' existent officiellement ?",
+          "choices": {
+            "A": "2 versions",
+            "B": "3 versions",
+            "C": "4 versions",
+            "D": "5 versions"
+          },
+          "answer": "C"
+        },
+        {
+          "question": "Quel est le premier album que Taylor a réenregistré en 'Taylor's Version' ?",
+          "choices": {
+            "A": "Red",
+            "B": "Speak Now",
+            "C": "Fearless",
+            "D": "1989"
+          },
+          "answer": "C"
+        }
+      ],
+      "note": "Les joueuses répondent à tour de rôle."
+    },
+    {
+      "id": 10,
+      "title": "LES ENCHÈRES #1",
+      "points": 3,
+      "type": "simple",
+      "question": "💰 'Je peux citer X chansons de l'album Lover (standard, pas deluxe)'",
+      "answer": "18 chansons : I Forgot That You Existed, Cruel Summer, Lover, The Man, The Archer, I Think He Knows, Miss Americana & The Heartbreak Prince, Paper Rings, Cornelia Street, Death By A Thousand Cuts, London Boy, Soon You'll Get Better, False God, You Need To Calm Down, Afterglow, ME!, It's Nice To Have A Friend, Daylight",
+      "note": "Les joueuses surenchérissent. La plus haute doit valider !"
+    },
+    {
+      "id": 11,
+      "title": "LA LISTE #2",
+      "points": 3,
+      "type": "liste",
+      "question": "Citez le maximum de chansons 'From The Vault' de Red (Taylor's Version) (30 secondes)",
+      "answer": "The Moment I Knew, Better Man, Nothing New, Babe, Message In A Bottle, I Bet You Think About Me, Forever Winter, Run, All Too Well (10 Minute Version)",
+      "note": "Celle qui en a le plus gagne 3 points !"
+    },
+    {
+      "id": 12,
+      "title": "LE CARRÉ D'AS #2",
+      "points": 3,
+      "type": "indices",
+      "question": "Devinez la chanson avec les indices progressifs",
+      "indices": [
+        "Cette chanson est sortie sur l'album 'Midnights'",
+        "Le clip vidéo montre Taylor dans différentes versions d'elle-même qui se détestent",
+        "La chanson parle de ses insécurités et de ses défauts",
+        "Le refrain commence par 'It's me, hi, I'm the problem...'"
+      ],
+      "answer": "Anti-Hero",
+      "pointsProgression": [4, 3, 2, 1]
+    },
+    {
+      "id": 13,
+      "title": "BLIND TEST #3",
+      "points": 2,
+      "type": "blindtest",
+      "question": "🎵 Écoutez l'extrait et trouvez le titre !",
+      "answer": "Love Story",
+      "youtubeId": "8xg3vE8Ie_E",
+      "startTime": 60,
+      "note": "Première à buzzer gagne !"
+    },
+    {
+      "id": 14,
+      "title": "QCM #3",
+      "points": 2,
+      "type": "qcm",
+      "questions": [
+        {
+          "question": "Quel âge avait Taylor quand elle a sorti son premier album ?",
+          "choices": {
+            "A": "14 ans",
+            "B": "16 ans",
+            "C": "18 ans",
+            "D": "20 ans"
+          },
+          "answer": "B"
+        },
+        {
+          "question": "Quels artistes ont collaboré avec Taylor sur 'Midnights' ? (Plusieurs réponses)",
+          "choices": {
+            "A": "Lana Del Rey",
+            "B": "Ed Sheeran",
+            "C": "Ice Spice",
+            "D": "Jack Antonoff"
+          },
+          "answer": ["A", "D"]
+        },
+        {
+          "question": "Quelle chanson a été le premier single de l'album '1989' ?",
+          "choices": {
+            "A": "Blank Space",
+            "B": "Style",
+            "C": "Shake It Off",
+            "D": "Bad Blood"
+          },
+          "answer": "C"
+        },
+        {
+          "question": "Dans quelle ville Taylor a-t-elle déménagé à 14 ans pour poursuivre sa carrière musicale ?",
+          "choices": {
+            "A": "Los Angeles",
+            "B": "New York",
+            "C": "Nashville",
+            "D": "Atlanta"
+          },
+          "answer": "C"
+        }
+      ],
+      "note": "Les joueuses répondent à tour de rôle."
+    },
+    {
+      "id": 15,
+      "title": "LA LISTE #3",
+      "points": 3,
+      "type": "liste",
+      "question": "Citez le maximum de célébrités/mannequins qui sont apparues dans le clip de 'Bad Blood' (30 secondes)",
+      "answer": "Selena Gomez, Karlie Kloss, Gigi Hadid, Cara Delevingne, Ellie Goulding, Hailee Steinfeld, Zendaya, Lily Aldridge, Martha Hunt, Jessica Alba, Mariska Hargitay, Ellen Pompeo, Serayah, Hayley Williams, Lena Dunham",
+      "note": "Celle qui en a le plus gagne 3 points !"
+    },
+    {
+      "id": 16,
+      "title": "RAPIDITÉ #2",
+      "points": 1,
+      "type": "simple",
+      "question": "Quel est le nom du chat de Taylor qui s'appelle comme un personnage de Grey's Anatomy ?",
+      "answer": "Meredith Grey (ou Meredith)",
+      "note": "Question rapide !"
+    },
+    {
+      "id": 17,
+      "title": "BLIND TEST #4",
+      "points": 2,
+      "type": "blindtest",
+      "question": "🎵 Écoutez l'extrait et trouvez le titre !",
+      "answer": "Cruel Summer",
+      "youtubeId": "ic8j13piAhQ",
+      "startTime": 50,
+      "note": "Première à buzzer gagne !"
+    },
+    {
+      "id": 18,
+      "title": "VRAI OU FAUX #2",
+      "points": 3,
+      "type": "vraifaux",
+      "questions": [
+        {
+          "question": "Taylor Swift a co-écrit la chanson 'This Is What You Came For' de Calvin Harris sous un pseudonyme",
+          "answer": true,
+          "explanation": "Sous le nom 'Nils Sjöberg'"
+        },
+        {
+          "question": "Taylor a gagné son premier Grammy à 20 ans pour l'album 'Fearless'",
+          "answer": true,
+          "explanation": "Elle est devenue la plus jeune artiste à gagner Album de l'année en 2010"
+        },
+        {
+          "question": "L'album 'folklore' a été annoncé 3 mois avant sa sortie",
+          "answer": false,
+          "explanation": "folklore a été annoncé seulement 16 heures avant sa sortie (surprise release)"
+        }
+      ],
+      "note": "Tout juste = 3 points, sinon 0 !"
+    },
+    {
+      "id": 19,
+      "title": "LA LISTE #4",
+      "points": 3,
+      "type": "liste",
+      "question": "Citez le maximum d'albums studio de Taylor Swift (incluant les réenregistrements Taylor's Version) (30 secondes)",
+      "answer": "Taylor Swift, Fearless, Speak Now, Red, 1989, reputation, Lover, folklore, evermore, Midnights, The Tortured Poets Department, Fearless (Taylor's Version), Red (Taylor's Version), Speak Now (Taylor's Version), 1989 (Taylor's Version)",
+      "note": "Celle qui en a le plus gagne 3 points !"
+    },
+    {
+      "id": 20,
+      "title": "LE CARRÉ D'AS #3",
+      "points": 3,
+      "type": "indices",
+      "question": "Devinez la chanson avec les indices progressifs",
+      "indices": [
+        "Cette chanson parle d'une romance tragique et dramatique",
+        "Le titre fait référence à la littérature classique de Shakespeare",
+        "Le clip se déroule dans un lycée et dans un bal costumé",
+        "C'est un des plus gros hits de Taylor, sorti sur l'album Fearless"
+      ],
+      "answer": "Love Story",
+      "pointsProgression": [4, 3, 2, 1]
+    },
+    {
+      "id": 21,
+      "title": "BLIND TEST #5",
+      "points": 2,
+      "type": "blindtest",
+      "question": "🎵 Écoutez l'extrait et trouvez le titre !",
+      "answer": "You Belong With Me",
+      "youtubeId": "VuNIsY6JdUw",
+      "startTime": 40,
+      "note": "Première à buzzer gagne !"
+    },
+    {
+      "id": 22,
+      "title": "LES ENCHÈRES #2",
+      "points": 3,
+      "type": "simple",
+      "question": "💰 'Je peux citer X chansons de Taylor Swift qui contiennent le mot LOVE dans le titre'",
+      "answer": "Love Story, This Love, Lover, Long Live - environ 4 chansons avec LOVE dans le titre",
+      "note": "Les joueuses surenchérissent. Attention : le mot doit être DANS LE TITRE !"
+    },
+    {
+      "id": 23,
+      "title": "RAPIDITÉ FINALE",
+      "points": 2,
+      "type": "simple",
+      "question": "Quel est le titre complet de l'album TTPD ?",
+      "answer": "The Tortured Poets Department",
+      "note": "Question finale rapide pour 2 points !"
     }
   ]
 }

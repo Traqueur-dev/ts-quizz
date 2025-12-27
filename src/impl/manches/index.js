@@ -8,3 +8,4 @@ export { default as MancheBlindTest } from './MancheBlindTest.js';
 export { default as MancheListe } from './MancheListe.js';
 export { default as MancheVraiFaux } from './MancheVraiFaux.js';
 export { default as MancheThemes } from './MancheThemes.js';
+export { default as MancheQCM } from './MancheQCM.js';

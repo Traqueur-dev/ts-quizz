@@ -12,90 +12,226 @@ Une application de quiz interactive et entièrement personnalisable pour 2 joueu
 
 ```
 ts-quizz/
-├── README.md                   # Documentation du projet
-├── ANSWERS.md                  # Fichier de réponses
-├── public/                     # Fichiers publics
-│   ├── index.html             # Point d'entrée HTML
-│   └── styles.css             # Styles CSS
-├── src/                       # Code source
-│   ├── main.js               # Point d'entrée JavaScript
-│   ├── config/               # Configuration
-│   │   ├── config.js         # Configuration du jeu (noms, scores, paramètres)
-│   │   └── quiz-data.js      # Données des questions du quiz
-│   └── modules/              # Modules fonctionnels
-│       ├── game-state.js     # Gestion de l'état du jeu
-│       ├── ui-manager.js     # Gestion de l'interface utilisateur
-│       └── quiz-logic.js     # Logique métier du quiz
-└── assets/                    # Ressources (à venir)
-    └── audio/                # Fichiers audio pour les blind tests
+├── README.md                      # Documentation du projet
+├── ANSWERS.md                     # Fichier de réponses
+├── public/                        # Fichiers publics
+│   ├── index.html                # Point d'entrée HTML
+│   └── assets/
+│       └── styles/               # Styles CSS
+│           ├── styles.css        # Styles globaux
+│           └── manches/          # Styles spécifiques par type de manche
+│               ├── simple.css
+│               ├── themes.css
+│               ├── blindtest.css
+│               ├── indices.css
+│               ├── liste.css
+│               └── vraifaux.css
+├── resources/                     # Configuration et données
+│   ├── config.json               # Configuration du jeu (noms, scores)
+│   └── quiz-data.json            # Questions et manches du quiz
+└── src/                          # Code source
+    ├── main.js                   # Point d'entrée et initialisation
+    ├── api/                      # Interfaces et classes abstraites
+    │   └── Manche.js            # Classe de base pour toutes les manches
+    ├── core/                     # Cœur de l'application
+    │   ├── GameState.js         # État global du jeu (singleton)
+    │   ├── QuizController.js    # Contrôleur principal du quiz
+    │   └── MancheFactory.js     # Factory pour créer les manches
+    ├── ui/                       # Interface utilisateur
+    │   ├── UIManager.js         # Gestionnaire UI global (singleton)
+    │   └── components/          # Composants UI réutilisables
+    │       ├── index.js         # Export centralisé
+    │       ├── ControlButtons.js    # Boutons de contrôle
+    │       ├── AnswerReveal.js      # Affichage des réponses
+    │       ├── Timer.js             # Composant chronomètre
+    │       ├── AudioPlayer.js       # Lecteur audio/YouTube
+    │       ├── ThemeSelector.js     # Sélecteur de thèmes
+    │       ├── IndicesDisplay.js    # Affichage des indices
+    │       ├── ListeInput.js        # Zone de saisie pour "La Liste"
+    │       └── VFButtons.js         # Boutons Vrai/Faux
+    ├── impl/                     # Implémentations
+    │   └── manches/             # Implémentations des manches
+    │       ├── index.js         # Export centralisé
+    │       ├── MancheSimple.js
+    │       ├── MancheThemes.js
+    │       ├── MancheBlindTest.js
+    │       ├── MancheIndices.js
+    │       ├── MancheListe.js
+    │       └── MancheVraiFaux.js
+    └── utils/                    # Utilitaires
+        └── DOMHelpers.js        # Helpers pour manipulation DOM
 ```
 
-## 🏗️ Architecture Modulaire
+## 🏗️ Architecture Modulaire Refactorisée
 
-### `public/`
-Contient les fichiers accessibles depuis le navigateur.
+Cette application suit les principes **SOLID** et utilise des **design patterns** éprouvés pour une architecture maintenable et extensible.
 
-### `src/config/`
+### 🎨 Design Patterns Utilisés
 
-#### `config.js` ⚙️ **À PERSONNALISER**
+#### **Factory Pattern** (`MancheFactory`)
+Centralise la création des manches selon leur type, permettant d'ajouter de nouveaux types sans modifier le code existant.
+
+#### **Template Method Pattern** (Classe `Manche`)
+Classe abstraite définissant le cycle de vie standard d'une manche : `initialize() → render() → onEnded() → cleanup()`.
+
+#### **Singleton Pattern** (`GameState`, `UIManager`)
+Instances uniques partagées dans toute l'application.
+
+#### **Component Pattern** (`src/ui/components/`)
+Composants UI réutilisables encapsulant leur logique et rendu.
+
+---
+
+### 📂 Structure Détaillée
+
+#### `resources/` ⚙️ **À PERSONNALISER**
+
+##### `config.json`
 Configuration centralisée du jeu :
-- **Noms des joueurs** : Personnalisez les noms (ex: Marie et Pauline)
-- **Score de victoire** : Définissez le score pour gagner (ex: 9 points)
-- **Paramètres de durée** : timers, animations, transitions
+```json
+{
+  "players": {
+    "player1": { "name": "Marie" },
+    "player2": { "name": "Pauline" }
+  },
+  "game": {
+    "listeTimerDuration": 45
+  }
+}
+```
 
-#### `quiz-data.js` 📝 **À PERSONNALISER**
-Contient toutes les questions et manches du quiz organisées par type.
+##### `quiz-data.json` 📝 **À PERSONNALISER**
+Contient toutes les manches et questions du quiz.
 **C'est ici que vous ajoutez vos propres questions !**
 
-### `src/modules/`
+---
 
-#### `game-state.js`
-**Responsabilité** : Gestion de l'état du jeu
-- Scores actuels des joueuses
-- Progression dans les manches
-- État des jokers (utilisés ou disponibles)
-- État des questions en cours (thèmes, indices, vrai/faux, etc.)
+#### `src/core/` - Cœur de l'Application
+
+##### `QuizController.js` 🎮
+**Orchestrateur principal du quiz**
+- Gère la progression entre les manches
+- Coordonne `GameState` et `UIManager`
+- Délègue la logique métier aux instances de manches
+- Système de polling pour détecter la fin des manches
+
+**Méthodes clés** :
+- `startQuiz()` - Lance le quiz
+- `nextManche()` - Passe à la manche suivante
+- `loadManche()` - Instancie la manche via la Factory
+- `handleMancheEnd()` - Gère les résultats et attribution des points
+
+##### `GameState.js` (Singleton)
+**État global du jeu - VERSION SIMPLIFIÉE**
+- ✅ Scores des joueurs
+- ✅ Jokers disponibles/utilisés
+- ✅ Métadonnées des manches (stockage générique)
+
+**Ce qu'il ne contient PLUS** :
+- ❌ Plus de champs spécifiques aux manches (thèmes, indices, timer...)
+- ❌ Chaque manche gère maintenant ses propres métadonnées
 
 **Méthodes principales** :
 - `incrementScore(player, points)` - Ajouter des points
 - `useJoker(player)` - Activer un joker
-- `hasWinner()` - Vérifier s'il y a une gagnante
-- `getWinner()` - Obtenir la gagnante
+- `getMetadata(index)` / `setMetadata(index, data)` - Stockage générique
 
-#### `ui-manager.js`
-**Responsabilité** : Gestion de l'affichage
-- Mise à jour des scores visuels
-- Affichage des questions et réponses
-- Animations et effets visuels (célébrations, confettis)
-- Gestion du modal de victoire
-- Contrôle de la progression visuelle
+##### `MancheFactory.js` (Pattern Factory)
+**Factory pour créer des instances de manches**
+- Enregistrement dynamique des types de manches
+- Création d'instances selon le type
+- Récupération des labels d'affichage
 
-**Méthodes principales** :
-- `updateScores()` - Mettre à jour l'affichage des scores
-- `showMancheInfo(manche)` - Afficher les infos de la manche
-- `celebratePlayer(player)` - Animation de célébration
-- `showWinner(player)` - Afficher le modal de victoire
+**Méthodes** :
+- `register(type, MancheClass)` - Enregistre un type
+- `create(mancheData, config)` - Crée une instance
+- `getTypeLabel(type)` - Obtient le label d'affichage
 
-#### `quiz-logic.js`
-**Responsabilité** : Logique métier du quiz
-- Déroulement des manches
-- Calcul des points avec multiplicateurs
-- Gestion des différents types de questions
-- Validation des réponses
-- Transitions entre manches
+---
 
-**Méthodes principales** :
-- `startQuiz()` - Démarrer le quiz
-- `nextManche()` - Passer à la manche suivante
-- `activateJoker(playerKey)` - Activer un joker
-- `awardPoints(playerKey)` - Attribuer des points
-- `loadControls(manche)` - Charger les contrôles selon le type de manche
+#### `src/api/` - Classes Abstraites
 
-#### `main.js`
-**Responsabilité** : Point d'entrée et initialisation
-- Initialise l'application
-- Expose les contrôleurs globalement pour les événements HTML (via `window.quizController`)
-- Connecte tous les modules ensemble
+##### `Manche.js` (Classe Abstraite)
+**Template Method Pattern** - Définit le cycle de vie d'une manche
+
+**Lifecycle** :
+1. `initialize()` - Charge métadonnées, CSS, et affiche l'UI
+2. `render()` - ⚠️ À implémenter par les sous-classes
+3. `onEnded()` - ⚠️ À implémenter - Retourne `{ winner, points }`
+4. `cleanup()` - Nettoie ressources (timers, listeners, CSS)
+
+**Gestion métadonnées** :
+- `loadMetadata()` - Initialise l'état de la manche
+- `saveMetadata()` - Sauvegarde pour GameState
+
+**Helpers** :
+- `loadCSS()` / `unloadCSS()` - Chargement dynamique des styles
+- `escapeHtml(text)` - Protection XSS
+
+---
+
+#### `src/impl/manches/` - Implémentations des Manches
+
+Chaque manche hérite de `Manche` et implémente :
+- `static getTypeLabel()` - Label d'affichage
+- `render()` - Interface utilisateur
+- `onEnded()` - Logique de fin et résultats
+
+**Types disponibles** :
+- `MancheSimple` - Question simple (avec bouton révéler)
+- `MancheThemes` - 4 thèmes avec 2 questions chacun
+- `MancheBlindTest` - Reconnaissance audio (MP3/YouTube)
+- `MancheIndices` - Indices progressifs (4→3→2→1 points)
+- `MancheListe` - Chrono 45s pour lister des réponses (avec bouton révéler)
+- `MancheVraiFaux` - Série d'affirmations V/F
+- `MancheQCM` - Questions à choix multiples, tour par tour
+
+---
+
+#### `src/ui/` - Interface Utilisateur
+
+##### `UIManager.js` (Singleton)
+**Responsabilités réduites aux éléments GLOBAUX uniquement**
+- ✅ Scores des joueurs
+- ✅ Barre de progression
+- ✅ Panneau de jokers
+- ✅ Célébrations et confettis
+- ✅ Modal de victoire finale
+
+**Ce qu'il ne gère PLUS** :
+- ❌ Contrôles spécifiques aux manches (déplacé dans chaque `Manche`)
+- ❌ Templates HTML des manches (géré par `render()`)
+
+##### `src/ui/components/` - Composants Réutilisables
+Composants UI encapsulés utilisés par les manches :
+- `ControlButtons` - Boutons attribuer points / passer
+- `AnswerReveal` - Affichage de la réponse
+- `Timer` - Chronomètre visuel
+- `AudioPlayer` - Lecteur MP3/YouTube
+- `ThemeSelector` - Sélection de thèmes A/B/C/D
+- `IndicesDisplay` - Affichage indices progressifs
+- `ListeInput` - Zone de texte avec chrono
+- `VFButtons` - Boutons Vrai/Faux
+
+---
+
+#### `src/main.js`
+**Point d'entrée et bootstrap de l'application**
+- Charge `config.json` et `quiz-data.json`
+- Enregistre les types de manches dans la Factory
+- Initialise l'UI (noms joueurs, liste des manches)
+- Expose `window.quizController.startQuiz()`
+
+---
+
+### ✨ Avantages de l'Architecture Refactorisée
+
+✅ **Extensibilité** : Ajouter un nouveau type de manche = créer une classe + l'enregistrer
+✅ **Séparation des responsabilités** : Chaque classe a un rôle unique et clair
+✅ **Maintenabilité** : Code organisé, facile à comprendre et modifier
+✅ **Réutilisabilité** : Composants UI réutilisables entre manches
+✅ **CSS modulaire** : Chaque manche charge son propre CSS dynamiquement
+✅ **Testabilité** : Classes découplées, faciles à tester unitairement
 
 ## 🎮 Types de Manches
 
@@ -129,7 +265,7 @@ Contient toutes les questions et manches du quiz organisées par type.
 
 ### 1️⃣ Modifier les noms des joueurs
 
-Éditer [src/config/config.json](src/config/config.json) :
+Éditer [resources/config.json](resources/config.json) :
 
 ```json
 {
@@ -149,7 +285,7 @@ Contient toutes les questions et manches du quiz organisées par type.
 
 ### 2️⃣ Personnaliser vos questions
 
-Éditer [src/config/quiz-data.json](src/config/quiz-data.json) - **Voici tous les types de manches disponibles** :
+Éditer [resources/quiz-data.json](resources/quiz-data.json) - **Voici tous les types de manches disponibles** :
 
 #### 📌 Question Simple
 ```javascript
@@ -260,25 +396,72 @@ Contient toutes les questions et manches du quiz organisées par type.
 }
 ```
 
-## 🔧 Technologies Utilisées
+#### 🎯 QCM - Questions à Choix Multiples
+```javascript
+{
+    id: 11,
+    type: "qcm",
+    title: "QCM",
+    points: 2,
+    questions: [
+        {
+            question: "Votre question ici ?",
+            choices: {
+                A: "Première option",
+                B: "Deuxième option",
+                C: "Troisième option",
+                D: "Quatrième option"
+            },
+            // Une seule bonne réponse
+            answer: "A"
+
+            // OU plusieurs bonnes réponses
+            // answer: ["A", "C"]
+        },
+        {
+            question: "Question 2 avec plusieurs réponses ?",
+            choices: {
+                A: "Option 1",
+                B: "Option 2",
+                C: "Option 3",
+                D: "Option 4"
+            },
+            answer: ["B", "D"]  // Plusieurs bonnes réponses
+        }
+        // Autant de questions que souhaité
+    ],
+    note: "Les joueuses répondent à tour de rôle. La bonne réponse est révélée après chaque question."
+}
+```
+
+## 🔧 Technologies & Patterns Utilisés
 
 - **HTML5** - Structure sémantique
-- **CSS3** - Styles avec gradients, animations, et responsive design
+- **CSS3** - Styles modulaires avec chargement dynamique par manche
 - **JavaScript ES6+** - Modules, classes, imports/exports
-- **Architecture MVC** - Séparation claire des responsabilités
-  - **Model** : `game-state.js`
-  - **View** : `ui-manager.js`
-  - **Controller** : `quiz-logic.js`
+- **Design Patterns** :
+  - **Factory Pattern** : Création des manches (`MancheFactory`)
+  - **Template Method** : Cycle de vie des manches (`Manche`)
+  - **Singleton** : État global (`GameState`, `UIManager`)
+  - **Component Pattern** : Composants UI réutilisables
+- **Architecture Modulaire** :
+  - **Core** : Orchestration et état (`QuizController`, `GameState`)
+  - **API** : Interfaces abstraites (`Manche`)
+  - **UI** : Gestion de l'affichage (`UIManager`, `components/`)
+  - **Impl** : Implémentations concrètes (`manches/`)
 
 ## ✨ Fonctionnalités
 
 - ✅ **100% Personnalisable** : Noms, questions, thèmes configurables
-- ✅ **6 Types de Manches** : Simple, Thèmes, Blind Test, Indices, Liste, Vrai/Faux
+- ✅ **7 Types de Manches** : Simple, Thèmes, Blind Test, Indices, Liste, Vrai/Faux, QCM
 - ✅ **Support YouTube** : Utilisez des liens YouTube pour les blind tests
 - ✅ **Support MP3** : Ou utilisez vos propres fichiers audio
 - ✅ **Système de Jokers** : Doublez les points d'une manche
 - ✅ **Interface Responsive** : Fonctionne sur tous les écrans
 - ✅ **Animations** : Célébrations, confettis, transitions fluides
+- ✅ **Architecture Extensible** : Ajoutez facilement de nouveaux types de manches
+- ✅ **CSS Modulaire** : Chaque manche charge son propre style dynamiquement
+- ✅ **Composants Réutilisables** : Bibliothèque de composants UI
 
 ## 📝 Améliorations Futures
 
@@ -308,6 +491,62 @@ Le projet utilise des modules ES6. Pour le développer localement :
 - Navigateur moderne supportant les modules ES6 (Chrome, Firefox, Safari, Edge)
 - Serveur HTTP local pour éviter les erreurs CORS
 
+### Ajouter un Nouveau Type de Manche
+
+Grâce à l'architecture modulaire, ajouter un nouveau type de manche est simple :
+
+1. **Créer la classe** dans `src/impl/manches/MancheMonType.js` :
+```javascript
+import Manche from '../../api/Manche.js';
+
+export default class MancheMonType extends Manche {
+    static getTypeLabel() {
+        return 'Mon Type de Manche';
+    }
+
+    loadMetadata() {
+        this.metadata = { /* état initial */ };
+    }
+
+    render() {
+        this.container.innerHTML = `<div>Mon UI</div>`;
+        // Ajouter les event listeners
+    }
+
+    onEnded() {
+        return { winner: 'player1', points: this.mancheData.points };
+    }
+
+    cleanup() {
+        super.cleanup();
+        // Nettoyage spécifique (timers, listeners...)
+    }
+}
+```
+
+2. **Exporter** dans `src/impl/manches/index.js` :
+```javascript
+export { default as MancheMonType } from './MancheMonType.js';
+```
+
+3. **Enregistrer** dans `src/main.js` :
+```javascript
+MancheFactory.register('montype', Manches.MancheMonType);
+```
+
+4. **Créer le CSS** (optionnel) dans `public/assets/styles/manches/montype.css`
+
+5. **Utiliser** dans `resources/quiz-data.json` :
+```json
+{
+  "id": 11,
+  "type": "montype",
+  "title": "MA NOUVELLE MANCHE",
+  "points": 2,
+  "question": "..."
+}
+```
+
 ## 📄 Licence
 
 Projet personnel - Marie & Pauline
@@ -316,8 +555,8 @@ Projet personnel - Marie & Pauline
 
 ## 🚀 Démarrage Rapide
 
-1. **Personnalisez les joueurs** dans `src/config/config.js`
-2. **Ajoutez vos questions** dans `src/config/quiz-data.js`
+1. **Personnalisez les joueurs** dans `resources/config.json`
+2. **Ajoutez vos questions** dans `resources/quiz-data.json`
 3. **Lancez un serveur** (voir section Développement ci-dessus)
 4. **Jouez !** 🎮
 

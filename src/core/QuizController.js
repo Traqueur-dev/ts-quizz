@@ -82,6 +82,18 @@ export default class QuizController {
         const player1HasJoker = this.gameState.hasJoker('player1');
         const player2HasJoker = this.gameState.hasJoker('player2');
 
+        // Récupérer les informations de la prochaine manche
+        const nextMancheData = this.quizData.manches[this.mancheIndex];
+        const manchePreview = `
+            <div class="joker-preview">
+                <div class="preview-label">🎯 Prochaine manche :</div>
+                <div class="preview-info">
+                    <span class="preview-title">${nextMancheData.title}</span>
+                    <span class="preview-points">${nextMancheData.points} point${nextMancheData.points > 1 ? 's' : ''}</span>
+                </div>
+            </div>
+        `;
+
         // Créer les boutons dynamiquement
         let buttonsHTML = '<div class="joker-buttons">';
 
@@ -99,6 +111,7 @@ export default class QuizController {
         const jokerPanel = document.getElementById('jokerPanel');
         jokerPanel.innerHTML = `
             <div class="joker-text">⚠️ Une joueuse souhaite-t-elle utiliser son JOKER pour doubler les points de cette manche ?</div>
+            ${manchePreview}
             ${buttonsHTML}
         `;
 
