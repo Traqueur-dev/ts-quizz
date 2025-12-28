@@ -116,7 +116,7 @@
     gap: 20px;
 }
 
-.player-score {
+.themes-player-score {
     font-size: 1.3em;
     font-weight: bold;
     color: #2d3748;
@@ -210,7 +210,7 @@
         gap: 10px;
     }
 
-    .player-score {
+    .themes-player-score {
         font-size: 1.1em;
         padding: 12px 20px;
     }

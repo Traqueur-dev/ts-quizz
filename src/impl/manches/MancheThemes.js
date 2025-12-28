@@ -24,6 +24,7 @@ export default class MancheThemes extends Manche {
         this.metadata = {
             selectedThemes: [],
             playerThemes: { player1: [], player2: [] },
+            themeOwners: {}, // Qui a choisi quel thème
             currentPlayer: 'player1',
             themeSelectionTurn: 0,
             themeScores: { player1: 0, player2: 0 },
@@ -101,9 +102,10 @@ export default class MancheThemes extends Manche {
             return;
         }
 
-        // Sauvegarder le thème
+        // Sauvegarder le thème et son propriétaire
         this.metadata.selectedThemes.push(this.metadata.currentThemeSelection);
         this.metadata.playerThemes[this.metadata.currentPlayer].push(this.metadata.currentThemeSelection);
+        this.metadata.themeOwners[this.metadata.currentThemeSelection] = this.metadata.currentPlayer;
 
         // Confirmer visuellement
         this.themeSelector.confirmTheme(this.metadata.currentPlayer);
@@ -118,7 +120,9 @@ export default class MancheThemes extends Manche {
         } else {
             // Tous les thèmes sont choisis, passer aux questions
             this.metadata.phase = 'playing';
-            this.metadata.currentPlayer = 'player1';
+            // Le joueur actuel est le propriétaire du premier thème
+            const firstTheme = this.metadata.selectedThemes[0];
+            this.metadata.currentPlayer = this.metadata.themeOwners[firstTheme];
             this.metadata.currentThemeIndex = 0;
             this.metadata.currentQuestionIndex = 0;
             this.render();
@@ -146,8 +150,8 @@ export default class MancheThemes extends Manche {
                     <p class="question-text">${this.escapeHtml(question.question)}</p>
                 </div>
                 <div class="themes-score">
-                    <div class="player-score">${this.escapeHtml(player1Name)}: ${this.metadata.themeScores.player1}</div>
-                    <div class="player-score">${this.escapeHtml(player2Name)}: ${this.metadata.themeScores.player2}</div>
+                    <div class="themes-player-score">${this.escapeHtml(player1Name)}: ${this.metadata.themeScores.player1}</div>
+                    <div class="themes-player-score">${this.escapeHtml(player2Name)}: ${this.metadata.themeScores.player2}</div>
                 </div>
                 <div id="answerReveal"></div>
                 <div id="controls"></div>
@@ -206,8 +210,7 @@ export default class MancheThemes extends Manche {
         this.metadata.currentQuestionIndex++;
 
         if (this.metadata.currentQuestionIndex < 2) {
-            // Il reste une question dans ce thème, alterner le joueur
-            this.metadata.currentPlayer = this.metadata.currentPlayer === 'player1' ? 'player2' : 'player1';
+            // Il reste une question dans ce thème, même joueur continue
             this.render();
         } else {
             // Thème terminé, passer au thème suivant
@@ -215,8 +218,9 @@ export default class MancheThemes extends Manche {
             this.metadata.currentQuestionIndex = 0;
 
             if (this.metadata.currentThemeIndex < 4) {
-                // Il reste des thèmes
-                this.metadata.currentPlayer = 'player1';
+                // Il reste des thèmes, passer au propriétaire du prochain thème
+                const nextTheme = this.metadata.selectedThemes[this.metadata.currentThemeIndex];
+                this.metadata.currentPlayer = this.metadata.themeOwners[nextTheme];
                 this.render();
             } else {
                 // Tous les thèmes terminés, passer aux résultats
@@ -262,7 +266,7 @@ export default class MancheThemes extends Manche {
     }
 
     /**
-     * Détermine le gagnant selon les scores
+     * Détermine le gagnant selon les scores et attribue les points
      */
     determineWinner() {
         const score1 = this.metadata.themeScores.player1;
@@ -277,6 +281,11 @@ export default class MancheThemes extends Manche {
         }
 
         this.ended = true;
+
+        // Attribuer les points au gagnant
+        if (this.winner) {
+            this.gameState.addPoints(this.winner, this.mancheData.points);
+        }
     }
 
     /**

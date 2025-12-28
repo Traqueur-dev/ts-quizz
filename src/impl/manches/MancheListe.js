@@ -243,7 +243,7 @@ export default class MancheListe extends Manche {
     }
 
     /**
-     * Détermine le gagnant selon le nombre d'items
+     * Détermine le gagnant selon le nombre d'items et attribue les points
      */
     determineWinner() {
         const count1 = this.metadata.listeScores.player1;
@@ -258,6 +258,11 @@ export default class MancheListe extends Manche {
         }
 
         this.ended = true;
+
+        // Attribuer les points au gagnant
+        if (this.winner) {
+            this.gameState.addPoints(this.winner, this.mancheData.points);
+        }
     }
 
     /**
