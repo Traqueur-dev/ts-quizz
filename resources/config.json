@@ -1,11 +1,11 @@
 {
   "players": {
     "player1": {
-      "name": "Joueur 1",
+      "name": "Pauline",
       "hasJoker": true
     },
     "player2": {
-      "name": "Joueur 2",
+      "name": "Marie",
       "hasJoker": true
     }
   },
